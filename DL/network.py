@@ -1,13 +1,14 @@
-import preprocess as prepro
 import numpy as np
+from keras.layers.core import Activation, Dense, Dropout
 from keras.models import Sequential
-from keras.layers.core import Dense, Dropout, Activation
 from keras.optimizers import SGD, Adam
 
+import preprocess as prepro
 
 batch_size = 64
 nb_epoch = 100
 data = None
+
 
 def model_build():
     model = Sequential()
@@ -29,6 +30,7 @@ def model_train():
                   loss='categorical_crossentropy', metrics=['accuracy'])
     model.fit(X_train, Y_train, batch_size=batch_size,
               nb_epoch=nb_epoch, verbose=1, validation_split=0.2)
+
 
 def model_predict():
     None
