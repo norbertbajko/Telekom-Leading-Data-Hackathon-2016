@@ -1,0 +1,33 @@
+{
+  "name": "telekom_x_kibu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard src test",
+    "server": "http-server . -c-1 -p 3000"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "2.2.4",
+    "leaflet" :"*",
+    "chart.js" : "*"
+  },
+  "devDependencies": {
+    "concurrently": "^2.0.0",
+    "lite-server": "^2.2.0",
+    "http-server": "^0.9.0",
+    "typescript": "^1.8.10",
+    "typings":"^1.0.4"
+  },
+  "scripts": {
+    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "lite": "lite-server",
+    "postinstall": "typings install",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "typings": "typings"
+  },
+  "author": "Norbert Bajko x Peter Nagy",
+  "license": "ISC"
+}
