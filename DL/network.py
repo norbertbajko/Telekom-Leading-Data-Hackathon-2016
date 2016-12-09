@@ -7,7 +7,7 @@ from keras.optimizers import SGD, Adam
 
 batch_size = 64
 nb_epoch = 100
-
+data = None
 
 def model_build():
     model = Sequential()
@@ -30,6 +30,12 @@ def model_train():
     model.fit(X_train, Y_train, batch_size=batch_size,
               nb_epoch=nb_epoch, verbose=1, validation_split=0.2)
 
+def model_predict():
+    None
+
 if __name__ == '__main__':
-    
+    data = prepro.csv_load()
+    for x in data:
+        print(x)
+    print()
     model_build()
