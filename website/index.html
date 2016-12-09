@@ -30,37 +30,68 @@
 
   <div class="row" id="body">
       <div class="row" id="input-wrapper">
+
+
         <div class="col-md-3">
-          <div class="input-group input-group-lg">
-            <span class="input-group-addon" id="sizing-addon1">GENDER</span>
-            <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon1">
-          </div>
+          <div class="input-group">
+           <div class="input-group-btn">
+             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">GENDER <span class="caret"></span></button>
+             <ul class="dropdown-menu" id="gender-dropdown">
+               <li><a href="#">MALE</a></li>
+               <li><a href="#">FEMALE</a></li>
+             </ul>
+           </div><!-- /btn-group -->
+           <input type="text" class="form-control t-input" id="gender-text" placeholder="GENDER" aria-label="...">
+         </div><!-- /input-group -->
         </div>
+
         <div class="col-md-3">
-          <div class="input-group input-group-lg">
-            <span class="input-group-addon" id="sizing-addon1">AGE</span>
-            <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon1">
-          </div>
+          <div class="input-group">
+           <div class="input-group-btn">
+             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AGE </button>
+           </div><!-- /btn-group -->
+           <input type="text" class="form-control t-input" placeholder="AGE" aria-label="...">
+         </div><!-- /input-group -->
         </div>
+
+
         <div class="col-md-3">
-          <div class="input-group input-group-lg">
-            <span class="input-group-addon" id="sizing-addon1">DAY</span>
-            <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon1">
-          </div>
+          <div class="input-group">
+           <div class="input-group-btn">
+             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">DAY <span class="caret"></span></button>
+             <ul class="dropdown-menu" id="weekday-dropdown">
+               <li><a href="#">MONDAY</a></li>
+               <li><a href="#">TUESDAY</a></li>
+               <li><a href="#">WEDNESDAY</a></li>
+               <li><a href="#">THURSDAY</a></li>
+               <li><a href="#">FRIDAY</a></li>
+               <li role="separator" class="divider"></li>
+               <li><a href="#">SATURDAY</a></li>
+               <li><a href="#">SUNDAY</a></li>
+             </ul>
+           </div><!-- /btn-group -->
+           <input type="text" class="form-control t-input" id="weekday-text" placeholder="DAY" aria-label="...">
+         </div><!-- /input-group -->
         </div>
+
+
         <div class="col-md-3">
-          <div class="input-group input-group-lg">
-            <span class="input-group-addon" id="sizing-addon1">CITY</span>
-            <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon1">
-          </div>
+          <div class="input-group">
+           <div class="input-group-btn">
+             <button type="button" class="btn btn-default dropdown-toggle" >CITY </button>
+           </div><!-- /btn-group -->
+           <input type="text" class="form-control t-input" placeholder="CITY" aria-label="...">
+         </div><!-- /input-group -->
         </div>
+
+
+      </div>
+      <div class="row" id="btn-wrapper">
+        <button type="button" id="submit" class="btn btn-default">When to call?</button>
       </div>
       <div class="row" id="heatmap_container">
-        hetmap
+        <div id="chart"></div>
       </div>
-
-
-
   </div>
   <div class="row" id="footer">
 
@@ -72,6 +103,7 @@
   <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="node_modules/chart.js/dist/Chart.min.js"></script>
   <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="js/scripts.js"></script>
 </body>
 </html>
