@@ -14,7 +14,7 @@ def push():
 
         return "POST"
     else:
-        return "Hello World!"
+        return "Use the service with HTTP POST method - params: {gender,age,day,city}"
 
 def format(gender,age,day):
     f = 0.0
@@ -27,6 +27,8 @@ def format(gender,age,day):
         f = 1.0
 
     if age == "":
+        a = 0.5
+    elif age == 0:
         a = 0.5
     else:
         a = min(int(age)/100.0,1.0)
