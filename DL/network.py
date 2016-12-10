@@ -27,9 +27,9 @@ def model_build():
 
 
 def model_train(model, X, Y):
-    checkpoint = ModelCheckpoint(filepath="weights-{epoch:02d}-{val_loss:.2f}.hdf5", monitor='val_acc', verbose=0,
-                                 save_best_only=True, mode='auto')
-    early_stopping = EarlyStopping(monitor='val_acc', min_delta=0.005, patience=50, mode='auto')
+    checkpoint = ModelCheckpoint(
+        filepath="weights/weights-{epoch:02d}-{val_acc:.2f}.hdf5", monitor='val_acc', verbose=0, save_best_only=True, mode='auto')
+    early_stopping = EarlyStopping(monitor='val_acc', min_delta=0.005, patience=100, mode='auto')
     model.compile(optimizer='adam',
                   loss='categorical_crossentropy', metrics=['accuracy'])
     model.fit(X, Y, batch_size=batch_size,
