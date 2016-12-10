@@ -48,5 +48,5 @@ def format(gender,age,day):
     return f,m,a,zeros
 
 if __name__ == "__main__":
-    model = network.model_build()
+    model = network.model_build("../DL/weights/weights-batch_size/64-dense/256_512-1081-0.37.hdf5")
     app.run()

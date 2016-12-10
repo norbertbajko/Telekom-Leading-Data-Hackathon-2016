@@ -10,7 +10,7 @@ batch_size = 64
 nb_epoch = 10000
 
 
-def model_build():
+def model_build(weights_loc = None):
     model = Sequential()
 
     model.add(Dense(512, input_shape=(12,)))
@@ -24,8 +24,8 @@ def model_build():
     # model.add(Dropout(0.5))
     model.add(Dense(9))
     model.add(Activation('softmax'))
-
-    # model.load_weights("weights/weights-batch_size:32-dense:256_512-732-0.31.hdf5")
+    if weights_loc is not None:
+        model.load_weights(weights_loc)
 
     # model.summary()
 
