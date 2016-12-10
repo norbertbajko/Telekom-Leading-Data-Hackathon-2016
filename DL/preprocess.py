@@ -1,5 +1,7 @@
+import copy
 import csv
 import datetime
+import math
 
 csv_location = './merged.csv'
 # zip_code_location = './hungarian_zipcodes.csv'
@@ -8,6 +10,8 @@ data = []
 # zipcodes = {}
 coordinates = {}
 coordinates_cache = {}
+
+expected_output = {}
 
 
 # def load_hungarian_zipcodes():
@@ -44,26 +48,26 @@ def csv_load(csv_loc=csv_location):
                     line[2][11:13]), int(line[2][14:16]), int(line[2][17:19])).weekday())
             except Exception as e:
                 print(e)
-            if int(line[2][14:16]) < 30:
-                line2.append(float(line[2][11:13]))
-            else:
-                line2.append(float(line[2][11:13]) + 0.5)
+            line2.append(float(line[2][11:13]))
 
             key = None
             if line[3] in coordinates_cache.keys() and line[4] in coordinates_cache[line[3]].keys():
                 key = coordinates_cache[line[3]][line[4]]
+                # print('cached')
             else:
-                for x in coordinates:
-                    key = x
+                for k in coordinates:
+                    key = k
                     break
-                key_error = abs(coordinates[key][0] - float(line[3])) + abs(coordinates[key][1] - float(line[4]))
+                key_error = math.sqrt(
+                    (coordinates[key][0] - float(line[3]))**2 + (coordinates[key][1] - float(line[4]))**2)
                 for x in coordinates:
                     # print(key_error)
-                    actual_error = abs(coordinates[x][1] - float(line[3])) + abs(coordinates[x][0] - float(line[4]))
+                    actual_error = math.sqrt(
+                        (coordinates[x][0] - float(line[3]))**2 + (coordinates[x][1] - float(line[4]))**2)
                     if actual_error < key_error:
-                        print('bent')
-                        key=x
-                        key_error=actual_error
+                        # print('bent')
+                        key = copy.deepcopy(x)
+                        key_error = copy.deepcopy(actual_error)
                 coordinates_cache.update({line[3]: {line[4]: key}})
             line2.append(coordinates[key][0])
             line2.append(coordinates[key][1])
@@ -79,10 +83,103 @@ def csv_load(csv_loc=csv_location):
         # print()
 
 
-def prepare_for_train():
-    data_x=[]
-    data_y=[]
+def prepare_for_train(data):
+    data_x = []
+    data_y = []
+    max_lat = 48.58512448
+    min_lat = 45.73711415
+    max_lon = 22.89696693
+    min_lon = 16.11411095
+    hour_index = [9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0]
+    for x in data:
+        if x[3] in hour_index:
 
+            f, m, a = 0.0, 0.0, 0.0
+            gender, age = x[0], x[1]
+            day = [0.0 for x in range(7)]
+            h = [0.0 for x in range(18)]
+            lat, lon, call, sms = x[4], x[5], x[6], x[7]
+
+            if gender == "M":
+                m = 1.0
+            elif gender == "F":
+                f = 1.0
+
+            if age == "" or age == 0:
+                a = 0.5
+            else:
+                a = min(int(age) / 100.0, 1.0)
+
+            day[x[2]] = 1.0
+
+            h[hour_index.index(x[3])] = 1.0
+
+            norm_lat = (lat - min_lat) / (max_lat - min_lat)
+            norm_lon = (lon - min_lon) / (max_lon - min_lon)
+
+            key = '|'.join(str(e) for e in [f,m,norm_lat,norm_lon])
+            if key in expected_output:
+
+                # for a in expected_output:
+                #     for s in expected_output[a]:
+                #         print(s)
+                #     print()
+
+                expected_output[key][x[2]][h.index(1.0)][0] += call
+                expected_output[key][x[2]][h.index(1.0)][1] += sms
+            else:
+
+                expected_output[key] = [ [ [0,0] for a in range(9)] for a in range(7) ]
+
+
+                # print('---')
+                # print(x[2])
+                # print(h.index(1.0))
+                # print(expected_output[key][x[2]])
+                # print('//////////')
+                expected_output[key][x[2]][h.index(1.0)] = [call, sms]
+
+
+    for x in expected_output:
+        for y in expected_output[x]:
+            print(y)
+        print()
+
+    return data_x, data_y
+
+
+def aggregate(data):
+    call_data = {}
+    sms_data = {}
+    for x in data:
+        key = '|'.join(str(e) for e in x[:-1])
+        if x[-1] == 1 or x[-1] == 2:
+            if key in call_data.keys():
+                call_data[key] += 1
+            else:
+                call_data[key] = 1
+        else:
+            if key in sms_data.keys():
+                sms_data[key] += 1
+            else:
+                sms_data[key] = 1
+
+    merged_data = []
+    for x in call_data:
+        y = x.split('|')
+        y[1] = int(y[1])
+        y[2] = int(y[2])
+        y[3] = float(y[3])
+        y[4] = float(y[4])
+        y[5] = float(y[5])
+        y.append(call_data[x])
+        if x in sms_data:
+            sms = sms_data[x]
+        else:
+            sms = 0
+        y.append(sms)
+        merged_data.append(y)
+    return merged_data
 
 if __name__ == '__main__':
 
@@ -90,6 +187,8 @@ if __name__ == '__main__':
     # print(zipcodes.keys())
     load_hungarian_coordinates()
     csv_load()
-    # for x in coordinates_cache:
-    #     print(x, coordinates_cache[x])
+    merged_data = aggregate(data)
+    data_x, data_y = prepare_for_train(merged_data)
+    # for x in merged_data:
+    #     print(x)
     # print()
