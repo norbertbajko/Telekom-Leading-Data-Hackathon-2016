@@ -49,7 +49,13 @@ $(document).ready( () => {
     });
 
     $('#submit').on('click', (e) => {
-        // TODO $.ajax();
+         $.ajax({
+           method: 'POST',
+           url: 'http://localhost:5000',
+           data: { gender: $('#gender-text').val(), age: $('#age-text').val(), day: $('#weekday-text').vak(), city: $('#city-text').val() }
+         }).done( (result) => {
+            console.log(result);
+         });
     });
 
 });
