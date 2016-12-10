@@ -5,7 +5,7 @@ import math
 
 csv_location = './merged.csv'
 # zip_code_location = './hungarian_zipcodes.csv'
-city_coorditanion_location = './hungarian_city_coor.csv'
+# city_coorditanion_location = './hungarian_city_coor.csv'
 
 # zipcodes = {}
 coordinates = {}
@@ -22,7 +22,7 @@ coordinates_cache = {}
 #             zipcodes[line[0]] = line[1]
 
 
-def load_hungarian_coordinates():
+def load_hungarian_coordinates(city_coorditanion_location = './hungarian_city_coor.csv'):
     with open(city_coorditanion_location) as csvfile:
         reader = csv.reader(csvfile)
         next(reader, None)
@@ -230,7 +230,7 @@ def aggregate(data):
 if __name__ == '__main__':
     # load_hungarian_zipcodes()
     # print(zipcodes.keys())
-    load_hungarian_coordinates()
+    load_hungarian_coordinates('./hungarian_city_coor.csv')
     data_x, data_y = prepare_for_train(aggregate(csv_load()))
     # for x in range(len(data_x)):
     #     print(data_x[x])
