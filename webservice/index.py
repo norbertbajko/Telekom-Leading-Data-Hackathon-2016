@@ -15,7 +15,7 @@ def push():
         city =  request.form["city"]
         f,m,a,days = format(gender,age,day)
 
-        print(f,m,a,days)
+        print(network.model_predict(model,m,f,a,days,city))
 
         return "POST"
     else:

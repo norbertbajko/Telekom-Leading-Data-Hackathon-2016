@@ -42,7 +42,7 @@ def model_train(model, X, Y):
               nb_epoch=nb_epoch, verbose=2, validation_split=0.2, callbacks=[early_stopping, checkpoint])
 
 
-def model_predict(model, m, f, a, days, city)
+def model_predict(model, m, f, a, days, city):
     coordinates = {}
     pp.load_hungarian_coordinates()
     city = coordinates[city]
