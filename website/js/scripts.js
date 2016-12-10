@@ -17,14 +17,19 @@ $(document).ready(() => {
 
 
     $('#submit').on('click', (e) => {
+
+      var gender = $('#gender-text').val();
+      var age = $('#age-text').val();
+      var city = $('#city-text').val();
+      if(gender != '' && age != null && city != null){
         $.ajax({
             method: 'POST',
             url: 'http://localhost:5000',
             data: {
-                gender: $('#gender-text').val(),
-                age: $('#age-text').val(),
+                gender: gender,
+                age: age,
                 day: $('#weekday-text').val(),
-                city: $('#city-text').val()
+                city: city
             }
         }).done((result) => {
             result = JSON.parse(result);
@@ -80,6 +85,10 @@ $(document).ready(() => {
 
 
         });
+      }else{
+        $.notify("You need to fill every field!", "error");
+      }
+
     });
 
 });
