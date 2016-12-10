@@ -15,7 +15,7 @@ def push():
         city =  request.form["city"]
         f,m,a,days = format(gender,age,day)
 
-        print(network.model_predict("../dl/hungarian_city_coor.csv",model,m,f,a,days,city))
+        print(network.model_predict("../DL/hungarian_city_coor.csv",model,m,f,a,days,city))
 
         return "POST"
     else:
@@ -48,5 +48,5 @@ def format(gender,age,day):
     return f,m,a,zeros
 
 if __name__ == "__main__":
-    model = network.model_build("../DL/weights/weights-batch_size/64-dense/256_512-1081-0.37.hdf5")
+    model = network.model_build("../DL/weights/weights-batch_size_64-dense_256_512-1081-0.37.hdf5")
     app.run()

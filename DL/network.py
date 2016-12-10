@@ -13,7 +13,7 @@ nb_epoch = 10000
 def model_build(weights_loc = None):
     model = Sequential()
 
-    model.add(Dense(512, input_shape=(12,)))
+    model.add(Dense(256, input_shape=(12,)))
     model.add(Activation('relu'))
     model.add(Dropout(0.5))
     model.add(Dense(512))
