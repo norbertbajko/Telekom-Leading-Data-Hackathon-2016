@@ -1,5 +1,5 @@
 # telekom_kibu
 
-* CNN
+* DNN
 * Web service
 * Web client
