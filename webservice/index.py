@@ -15,7 +15,7 @@ def push():
         city =  request.form["city"]
         f,m,a,days = format(gender,age,day)
 
-        print(network.model_predict("../DL/hungarian_city_coor.csv",model,m,f,a,days,city))
+        print(network.model_predict("../dl/hungarian_city_coor.csv",model,m,f,a,days,city))
 
         return "POST"
     else:
