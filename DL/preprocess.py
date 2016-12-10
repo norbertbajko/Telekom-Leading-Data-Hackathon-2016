@@ -230,7 +230,7 @@ def aggregate(data):
 if __name__ == '__main__':
     # load_hungarian_zipcodes()
     # print(zipcodes.keys())
-    # load_hungarian_coordinates()
+    load_hungarian_coordinates()
     data_x, data_y = prepare_for_train(aggregate(csv_load()))
     # for x in range(len(data_x)):
     #     print(data_x[x])
