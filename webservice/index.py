@@ -1,5 +1,10 @@
 from flask import Flask, request
 app = Flask(__name__)
+import sys
+sys.path.insert(0,"../DL")
+import network
+
+model = None
 
 @app.route("/", methods =['GET','POST'])
 def push():
@@ -43,4 +48,5 @@ def format(gender,age,day):
     return f,m,a,zeros
 
 if __name__ == "__main__":
+    model = network.model_build()
     app.run()
