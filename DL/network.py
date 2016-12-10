@@ -63,8 +63,10 @@ def model_predict(hu_coor_loc, model, m, f, a, days, city):
     tmp.append(norm_lat)
     tmp.append(norm_lon)
 
+    tmp = np.array(tmp)
+    tmp = np.reshape(tmp,(1,12))
     results = model.predict(tmp, batch_size=1, verbose=0)
-    return results
+    return results[0]
 
 if __name__ == '__main__':
     data_x, data_y = pp.prepare_for_train(pp.aggregate(pp.csv_load()))

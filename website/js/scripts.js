@@ -52,7 +52,7 @@ $(document).ready( () => {
          $.ajax({
            method: 'POST',
            url: 'http://localhost:5000',
-           data: { gender: $('#gender-text').val(), age: $('#age-text').val(), day: $('#weekday-text').vak(), city: $('#city-text').val() }
+           data: { gender: $('#gender-text').val(), age: $('#age-text').val(), day: $('#weekday-text').val(), city: $('#city-text').val() }
          }).done( (result) => {
             console.log(result);
          });
