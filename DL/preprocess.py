@@ -90,7 +90,7 @@ def prepare_for_train(data):
     min_lat = 45.73711415
     max_lon = 22.89696693
     min_lon = 16.11411095
-    hour_index = [9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0]
+    hour_index = [9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0]
     for x in data:
         if x[3] in hour_index:
 
@@ -117,33 +117,59 @@ def prepare_for_train(data):
             norm_lat = (lat - min_lat) / (max_lat - min_lat)
             norm_lon = (lon - min_lon) / (max_lon - min_lon)
 
-            key = '|'.join(str(e) for e in [f,m,norm_lat,norm_lon])
+            key = '|'.join(str(e) for e in [f, m, a, norm_lat, norm_lon])
             if key in expected_output:
-
-                # for a in expected_output:
-                #     for s in expected_output[a]:
-                #         print(s)
-                #     print()
 
                 expected_output[key][x[2]][h.index(1.0)][0] += call
                 expected_output[key][x[2]][h.index(1.0)][1] += sms
             else:
 
-                expected_output[key] = [ [ [0,0] for a in range(9)] for a in range(7) ]
-
-
-                # print('---')
-                # print(x[2])
-                # print(h.index(1.0))
-                # print(expected_output[key][x[2]])
-                # print('//////////')
-                expected_output[key][x[2]][h.index(1.0)] = [call, sms]
-
+                expected_output[key] = [[[0.0, 0.0] for a in range(9)] for a in range(7)]
+                expected_output[key][x[2]][h.index(1.0)] = [float(call), float(sms)]
 
     for x in expected_output:
-        for y in expected_output[x]:
-            print(y)
-        print()
+        for y in range(len(expected_output[x])):
+            expected_output[x][y] = [item for sublist in expected_output[x][y] for item in sublist]
+            # print(expected_output[x][y])
+        # print()
+    for x in data:
+        if x[3] in hour_index:
+
+            f, m, a = 0.0, 0.0, 0.0
+            gender, age = x[0], x[1]
+            day = [0.0 for x in range(7)]
+            h = [0.0 for x in range(18)]
+            lat, lon, call, sms = x[4], x[5], x[6], x[7]
+
+            if gender == "M":
+                m = 1.0
+            elif gender == "F":
+                f = 1.0
+
+            if age == "" or age == 0:
+                a = 0.5
+            else:
+                a = min(int(age) / 100.0, 1.0)
+
+            day[x[2]] = 1.0
+
+
+
+            h[hour_index.index(x[3])] = 1.0
+
+            norm_lat = (lat - min_lat) / (max_lat - min_lat)
+            norm_lon = (lon - min_lon) / (max_lon - min_lon)
+
+        tmp = [f,m,a]
+        for element in day:
+            tmp.append(element)
+        tmp.append(norm_lat)
+        tmp.append(norm_lon)
+        data_x.append(tmp)
+
+        key = '|'.join(str(e) for e in [f, m, a, norm_lat, norm_lon])
+
+        data_y.append(expected_output[key][day.index(1.0)])
 
     return data_x, data_y
 
@@ -189,6 +215,8 @@ if __name__ == '__main__':
     csv_load()
     merged_data = aggregate(data)
     data_x, data_y = prepare_for_train(merged_data)
-    # for x in merged_data:
-    #     print(x)
-    # print()
+    for x in range(len(data_x)):
+        print(data_x[x])
+        print(data_y[x])
+        print()
+    print()
