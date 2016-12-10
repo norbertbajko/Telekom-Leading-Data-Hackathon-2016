@@ -16,9 +16,9 @@ def model_build():
     model.add(Dense(256, input_shape=(12,)))
     model.add(Activation('relu'))
     model.add(Dropout(0.5))
-    model.add(Dense(256))
-    model.add(Activation('relu'))
-    model.add(Dropout(0.5))
+    # model.add(Dense(512))
+    # model.add(Activation('relu'))
+    # model.add(Dropout(0.5))
     model.add(Dense(9))
     model.add(Activation('softmax'))
 
@@ -28,12 +28,12 @@ def model_build():
 
 def model_train(model, X, Y):
     checkpoint = ModelCheckpoint(
-        filepath="weights/weights-{epoch:02d}-{val_acc:.2f}.hdf5", monitor='val_acc', verbose=0, save_best_only=True, mode='auto')
-    early_stopping = EarlyStopping(monitor='val_acc', min_delta=0.005, patience=100, mode='auto')
+        filepath="weights/weights-batch_size:" + str(batch_size) + "-{epoch:02d}-{val_acc:.2f}.hdf5", monitor='val_acc', verbose=0, save_best_only=True, mode='auto')
+    early_stopping = EarlyStopping(monitor='val_acc', min_delta=0.005, patience=200, mode='auto')
     model.compile(optimizer='adam',
                   loss='categorical_crossentropy', metrics=['accuracy'])
     model.fit(X, Y, batch_size=batch_size,
-              nb_epoch=nb_epoch, verbose=1, validation_split=0.2, callbacks=[early_stopping, checkpoint])
+              nb_epoch=nb_epoch, verbose=2, validation_split=0.2, callbacks=[early_stopping, checkpoint])
 
 
 def model_predict():

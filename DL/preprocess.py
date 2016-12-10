@@ -10,7 +10,7 @@ city_coorditanion_location = './hungarian_city_coor.csv'
 # zipcodes = {}
 coordinates = {}
 coordinates_cache = {}
-expected_output = {}
+# expected_output = {}
 
 
 # def load_hungarian_zipcodes():
@@ -86,6 +86,7 @@ def csv_load(csv_loc=csv_location):
 
 
 def prepare_for_train(data):
+    expected_output = {}
     data_x = []
     data_y = []
     max_lat = 48.58512448
