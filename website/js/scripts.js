@@ -42,6 +42,21 @@ $(document).ready( () => {
     var weekdays = ["SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"];
     $('#weekday-text').val(weekdays[new Date().getDay()]);
 
+    var maxWidth = 0;
+    $(".dropdown-toggle").each( (idx,elem) => {
+        var width = $(elem).width();
+
+        if(maxWidth < width)
+          maxWidth = width;
+    }).promise().done(
+      $(".dropdown-toggle").each( (idx,elem) => {
+          $(elem).width(maxWidth);
+      })
+    );
+
+
+
+
     $('#gender-dropdown li').on('click',(e) => {
       var elem = e.target;
       var label = elem.text;
