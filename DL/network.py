@@ -13,7 +13,7 @@ nb_epoch = 10000
 def model_build(weights_loc = None):
     model = Sequential()
 
-    model.add(Dense(256, input_shape=(12,)))
+    model.add(Dense(512, input_shape=(12,)))
     model.add(Activation('relu'))
     model.add(Dropout(0.5))
     model.add(Dense(512))
@@ -57,16 +57,22 @@ def model_predict(hu_coor_loc, model, m, f, a, days, city):
     norm_lat = (lat - min_lat) / (max_lat - min_lat)
     norm_lon = (lon - min_lon) / (max_lon - min_lon)
 
-    tmp = [m, f, a]
-    for element in days:
-        tmp.append(element)
-    tmp.append(norm_lat)
-    tmp.append(norm_lon)
-
-    tmp = np.array(tmp)
-    tmp = np.reshape(tmp,(1,12))
-    results = model.predict(tmp, batch_size=1, verbose=0)
-    return results[0]
+    day = [0.0 for x in range(7)]
+    days = [day for x in range(7)]
+    for x in range(len(days)):
+        days[x][x] = 1.0
+    tmp2 = []
+    for x in range(7):
+        tmp = [m, f, a]
+        for element in days[x]:
+            tmp.append(element)
+        tmp.append(norm_lat)
+        tmp.append(norm_lon)
+        tmp2.array(tmp)
+    tmp2 = np.array(tmp2)
+    tmp2 = np.reshape(tmp2,(7,12))
+    results = model.predict(tmp2, batch_size=7, verbose=0)
+    return results
 
 if __name__ == '__main__':
     data_x, data_y = pp.prepare_for_train(pp.aggregate(pp.csv_load()))
