@@ -22,14 +22,14 @@ coordinates_cache = {}
 #             zipcodes[line[0]] = line[1]
 
 
-def load_hungarian_coordinates(city_coorditanion_location = './hungarian_city_coor.csv'):
+def load_hungarian_coordinates(city_coorditanion_location = './hungarian_city_coor.csv', coor = coordinates):
     with open(city_coorditanion_location) as csvfile:
         reader = csv.reader(csvfile)
         next(reader, None)
         for line in reader:
             lon = float(line[1][:2]) + (float(line[1][3:5]) / 60) + (float(line[1][6:8]) / 3600)
             lat = float(line[2][:2]) + (float(line[2][3:5]) / 60) + (float(line[2][6:8]) / 3600)
-            coordinates[line[0]] = [lat, lon]
+            coor[line[0]] = [lat, lon]
 
 
 def csv_load(csv_loc=csv_location):

@@ -44,7 +44,7 @@ def model_train(model, X, Y):
 
 def model_predict(hu_coor_loc, model, m, f, a, days, city):
     coordinates = {}
-    pp.load_hungarian_coordinates(hu_coor_loc)
+    pp.load_hungarian_coordinates(hu_coor_loc, coordinates)
     city = coordinates[city]
     lat = city[0]
     lon = city[1]
