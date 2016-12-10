@@ -6,11 +6,10 @@ import math
 csv_location = './merged.csv'
 # zip_code_location = './hungarian_zipcodes.csv'
 city_coorditanion_location = './hungarian_city_coor.csv'
-data = []
+
 # zipcodes = {}
 coordinates = {}
 coordinates_cache = {}
-
 expected_output = {}
 
 
@@ -34,6 +33,8 @@ def load_hungarian_coordinates():
 
 
 def csv_load(csv_loc=csv_location):
+    load_hungarian_coordinates()
+    data = []
     line_number = 0
     error_number = 0
     with open(csv_loc) as csvfile:
@@ -73,14 +74,15 @@ def csv_load(csv_loc=csv_location):
             line2.append(coordinates[key][1])
             line2.append(int(line[5]))
             data.append(line2)
-            if line_number % 1000 == 0 and line_number != 0:
+            if line_number % 2500 == 0 and line_number != 0:
                 print(line_number)
             line_number += 1
         #     else:
         #         error_number += 1
         # print()
         # print(error_number)
-        # print()
+        print()
+        return data
 
 
 def prepare_for_train(data):
@@ -130,6 +132,25 @@ def prepare_for_train(data):
     for x in expected_output:
         for y in range(len(expected_output[x])):
             expected_output[x][y] = [item for sublist in expected_output[x][y] for item in sublist]
+            tmp = []
+            it = iter(expected_output[x][y])
+            for ite in it:
+                point = 0.5
+                one, two = ite,next(it)
+                if one == 0:
+                    point -= one * 0.2
+                    if two == 0:
+                        point -= one * 0.1
+                    else:
+                        point += one * 0.05
+                else:
+                    point += one * 0.1
+                    if two == 0:
+                        point += one * 0.05
+                    else:
+                        point += one * 0.2
+                tmp.append(point)
+            expected_output[x][y] = copy.deepcopy(tmp)
             # print(expected_output[x][y])
         # print()
     for x in data:
@@ -153,14 +174,12 @@ def prepare_for_train(data):
 
             day[x[2]] = 1.0
 
-
-
             h[hour_index.index(x[3])] = 1.0
 
             norm_lat = (lat - min_lat) / (max_lat - min_lat)
             norm_lon = (lon - min_lon) / (max_lon - min_lon)
 
-        tmp = [f,m,a]
+        tmp = [f, m, a]
         for element in day:
             tmp.append(element)
         tmp.append(norm_lat)
@@ -208,15 +227,12 @@ def aggregate(data):
     return merged_data
 
 if __name__ == '__main__':
-
     # load_hungarian_zipcodes()
     # print(zipcodes.keys())
-    load_hungarian_coordinates()
-    csv_load()
-    merged_data = aggregate(data)
-    data_x, data_y = prepare_for_train(merged_data)
-    for x in range(len(data_x)):
-        print(data_x[x])
-        print(data_y[x])
-        print()
-    print()
+    # load_hungarian_coordinates()
+    data_x, data_y = prepare_for_train(aggregate(csv_load()))
+    # for x in range(len(data_x)):
+    #     print(data_x[x])
+    #     print(data_y[x])
+    #     print()
+    # print()
