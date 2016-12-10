@@ -27,7 +27,7 @@ def model_build():
 
 
 def model_train(model, X, Y):
-    checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=0,
+    checkpoint = ModelCheckpoint(filepath="weights-{epoch:02d}-{val_loss:.2f}.hdf5", monitor='val_acc', verbose=0,
                                  save_best_only=True, mode='auto')
     early_stopping = EarlyStopping(monitor='val_acc', min_delta=0.005, patience=50, mode='auto')
     model.compile(optimizer='adam',
