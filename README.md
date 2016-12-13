@@ -3,13 +3,13 @@
 <b>Authors:</b> Norbert Bajko and Peter Nagy</br>
 The application gathered the 1st Price for us in the "Data driven application" category
 
-* Deep Learning:</br>
+* *Deep Learning*</br>
 We trained a fully connected Nerual Network to predict in which hours of a week is it suitable for a given customer group to receive an advertisement call.
 
-* Web service</br>
-A simple webservice implemented in python connecting the network model and the web application.
+* *Web service*</br>
+A simple webservice implemented in Python connecting the network model and the web application.
 
-* Web client</br>
+* *Web client*</br>
 
 ![Image of Webclient](https://github.com/norbertbajko/Telekom-Leading-Data-Hackaton-2016/blob/master/screen.png)
 
