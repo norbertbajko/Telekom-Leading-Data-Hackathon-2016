@@ -1,4 +1,4 @@
-# Telekom Leading Data Hackaton - 2016
+# Telekom Leading Data Hackathon - 2016
 
 <b>Authors:</b> Norbert Bajko and Peter Nagy</br>
 The application gathered the 1st Price for us in the "Data driven application" category
@@ -11,9 +11,9 @@ A simple webservice implemented in Python connecting the network model and the w
 
 * *Web client*</br>
 
-![Image of Webclient](https://github.com/norbertbajko/Telekom-Leading-Data-Hackaton-2016/blob/master/screen.png)
+![Image of Webclient](https://github.com/norbertbajko/Telekom-Leading-Data-Hackathon-2016/blob/master/screen.png)
 
 
 We also imagined a simple use-case for our project for future use. Here you can see our solution integrated to an imaginary CRM, shwowing real-time whether a given customer is available:
 
-![Image of UseCase](https://github.com/norbertbajko/Telekom-Leading-Data-Hackaton-2016/blob/master/upgrade.png)
+![Image of UseCase](https://github.com/norbertbajko/Telekom-Leading-Data-Hackathon-2016/blob/master/upgrade.png)
